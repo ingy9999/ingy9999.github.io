@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Japanese Size Chart Converter – JP to US/UK/EU Clothing & Shoe Sizes</title>
+<meta name="description" content="Buying clothes from Japan? Translate Japanese size charts (着丈, 身幅, 肩幅...) into inches, find your Japanese clothing size, and convert JP shoe sizes to US, UK and EU.">
+<style>
+  :root{
+    --bg:#f6f4ef; --card:#ffffff; --ink:#1d1d1b; --muted:#6b6b66; --line:#e3e0d8;
+    --accent:#b23a2b; --accent-soft:#f3e3df;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+  header{padding:48px 20px 24px;max-width:860px;margin:0 auto}
+  header .eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:8px 0 12px}
+  header p{color:var(--muted);margin:0;max-width:620px}
+  nav{max-width:860px;margin:0 auto;padding:0 20px 8px;display:flex;flex-wrap:wrap;gap:8px}
+  nav a{font-size:14px;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--card);padding:6px 12px;border-radius:999px}
+  nav a:hover{border-color:var(--accent);color:var(--accent)}
+  main{max-width:860px;margin:0 auto;padding:12px 20px 48px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin:16px 0}
+  h2{font-size:22px;margin:0 0 6px}
+  .lead{color:var(--muted);margin:0 0 18px;font-size:15px}
+  label{font-size:14px;font-weight:600;display:block;margin-bottom:4px}
+  input,select{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;width:100%}
+  input:focus,select:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+  .row{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:14px}
+  .result{background:var(--accent-soft);border-radius:10px;padding:14px 16px;font-size:15px}
+  .result strong{font-size:20px}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{font-size:13px;color:var(--muted);font-weight:600}
+  td .jp{font-size:18px;font-weight:700}
+  td .rom{display:block;font-size:12px;color:var(--muted)}
+  td .en{display:block;font-size:14px;line-height:1.4;margin-top:2px}
+  .out{min-width:76px}
+  .out .sub{display:block;font-weight:400;font-size:12px;white-space:normal;line-height:1.35;margin-top:2px}
+  @media (max-width:480px){ section{padding:18px 14px} th,td{padding:10px 4px} }
+  td input{width:88px;min-width:88px;padding:8px 10px;text-align:right}
+  input[type=number]{-moz-appearance:textfield;appearance:textfield}
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .out{font-weight:700;white-space:nowrap}
+  .note{font-size:13px;color:var(--muted);margin-top:12px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:14px}
+  .seg button{font:inherit;font-size:14px;border:0;background:#fff;padding:8px 14px;cursor:pointer}
+  .seg button.on{background:var(--ink);color:#fff}
+  ul.tips{padding-left:20px;margin:0}
+  ul.tips li{margin:6px 0}
+  footer{max-width:860px;margin:0 auto;padding:0 20px 40px;font-size:13px;color:var(--muted)}
+  .scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Buying clothes from Japan</div>
+  <h1>Japanese Size Chart Converter</h1>
+  <p>Translate Japanese size charts into inches, find your Japanese clothing size, and convert JP shoe sizes to US, UK and EU — all in one place.</p>
+</header>
+
+<nav>
+  <a href="#translator">Size chart translator</a>
+  <a href="#clothing">Clothing size finder</a>
+  <a href="#shoes">Shoe size converter</a>
+  <a href="#cm-inch">cm ⇄ inch</a>
+  <a href="#tips">Tips</a>
+</nav>
+
+<main>
+
+<section id="translator">
+  <h2>Japanese size chart translator</h2>
+  <p class="lead">Japanese online stores list garment measurements in Japanese and in centimeters. Type the numbers from the chart to see what each one means in inches.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Japanese term</th><th>cm</th><th>inches</th></tr></thead>
+    <tbody id="termRows"></tbody>
+  </table>
+  </div>
+  <p class="note"><strong>Important:</strong> 身幅 (body width), ウエスト on flat-laid pants, and 渡り幅 (thigh width) are usually measured <em>flat</em>, across one side of the garment. Double them to get the full circumference — we show that number too.</p>
+</section>
+
+<section id="clothing">
+  <h2>Find your Japanese clothing size</h2>
+  <p class="lead">Based on the Japanese Industrial Standards (JIS) body measurements used by most Japanese brands. Japanese sizes often run about one size smaller than US sizes.</p>
+  <div class="seg" id="genderSeg">
+    <button type="button" data-g="men" class="on">Men</button>
+    <button type="button" data-g="women">Women</button>
+  </div>
+  <div class="row">
+    <div>
+      <label for="chest" id="chestLabel">Your chest (around the fullest part)</label>
+      <input id="chest" type="number" inputmode="decimal" placeholder="e.g. 38">
+    </div>
+    <div>
+      <label for="chestUnit">Unit</label>
+      <select id="chestUnit"><option value="in">inches</option><option value="cm">cm</option></select>
+    </div>
+  </div>
+  <div class="result" id="clothingResult">Enter your measurement to see your size.</div>
+  <p class="note">This compares <em>body</em> measurements. Always check the garment measurements in the store's size chart too — oversized and slim fits can differ by several sizes.</p>
+</section>
+
+<section id="shoes">
+  <h2>Japanese shoe size converter</h2>
+  <p class="lead">Japanese shoe sizes are your foot length in centimeters. Pick a size to see the usual US, UK and EU equivalents.</p>
+  <div class="seg" id="shoeSeg">
+    <button type="button" data-g="men" class="on">Men</button>
+    <button type="button" data-g="women">Women</button>
+  </div>
+  <div class="row">
+    <div>
+      <label for="shoeFrom">Convert from</label>
+      <select id="shoeFrom">
+        <option value="jp">Japan (cm)</option><option value="us">US</option><option value="uk">UK</option><option value="eu">EU</option>
+      </select>
+    </div>
+    <div>
+      <label for="shoeSize">Size</label>
+      <select id="shoeSize"></select>
+    </div>
+  </div>
+  <div class="result" id="shoeResult"></div>
+  <p class="note">Shoe sizing varies by brand. UK and EU equivalents in particular can differ by half to one size between brands (for example, Nike and adidas use different charts). Use this as a starting point and check the brand's own chart when it has one.</p>
+</section>
+
+<section id="cm-inch">
+  <h2>cm ⇄ inch</h2>
+  <div class="row">
+    <div><label for="cmIn">Centimeters</label><input id="cmIn" type="number" inputmode="decimal" placeholder="cm"></div>
+    <div><label for="inIn">Inches</label><input id="inIn" type="number" inputmode="decimal" placeholder="in"></div>
+  </div>
+  <p class="note">1 inch = 2.54 cm</p>
+</section>
+
+<section id="tips">
+  <h2>Tips for buying clothes from Japan</h2>
+  <ul class="tips">
+    <li><strong>Compare with a garment you own.</strong> Lay your favorite shirt flat, measure it the same way as the size chart, and compare. This is more reliable than size labels.</li>
+    <li><strong>Watch for "flat" measurements.</strong> A 身幅 of 55 cm means a chest circumference of about 110 cm (43.3 in).</li>
+    <li><strong>Letter sizes are not universal.</strong> A Japanese M is often closer to a US S. Some brands use numbers (1, 2, 3 or 0, 1, 2) instead of letters — check their chart.</li>
+    <li><strong>Read the fit notes.</strong> Words like オーバーサイズ (oversized), ゆったり (relaxed) or タイト (tight) next to the chart tell you how the brand intends it to fit.</li>
+    <li><strong>Check return rules before ordering.</strong> International returns can be expensive, so getting the size right the first time matters.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  Size conversions are approximate and for reference only. Always check the size chart of the item you are buying.
+</footer>
+
+<script>
+const IN = 2.54;
+const fmt = n => (Math.round(n*10)/10).toString();
+
+/* ---------- 1. Size chart translator ---------- */
+const terms = [
+  ["着丈","kitake","Length (shoulder top to hem)",false],
+  ["身幅","mihaba","Body width / chest (flat)",true],
+  ["肩幅","katahaba","Shoulder width",false],
+  ["袖丈","sodetake","Sleeve length",false],
+  ["裄丈","yukitake","Sleeve length from center back neck",false],
+  ["ウエスト","uesuto","Waist (often flat on pants)",true],
+  ["ヒップ","hippu","Hip (often flat)",true],
+  ["股上","matagami","Rise",false],
+  ["股下","matashita","Inseam",false],
+  ["渡り幅","watarihaba","Thigh width (flat)",true],
+  ["裾幅","susohaba","Hem / leg opening width (flat)",true],
+  ["総丈","sōtake","Total length (pants, dresses)",false],
+];
+const rows = document.getElementById("termRows");
+terms.forEach(([jp,rom,en,flat],i)=>{
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td><span class="jp">${jp}</span> <span class="rom" style="display:inline">${rom}</span><span class="en">${en}</span></td>
+    <td><input type="number" inputmode="decimal" data-i="${i}" placeholder="cm"></td>
+    <td class="out" id="o${i}">–</td>`;
+  rows.appendChild(tr);
+});
+rows.addEventListener("input",e=>{
+  const i=e.target.dataset.i; if(i===undefined) return;
+  const v=parseFloat(e.target.value); const o=document.getElementById("o"+i);
+  if(isNaN(v)){o.textContent="–";return;}
+  let t=fmt(v/IN)+" in";
+  if(terms[i][3]) t+=`<span class="sub">×2 = ${fmt(v*2/IN)} in around<br>(${fmt(v*2)} cm)</span>`;
+  o.innerHTML=t;
+});
+
+/* ---------- 2. Clothing size finder (JIS body measurements) ---------- */
+// JIS chest/bust ranges in cm. US men's chest ranges in cm (approx, common US retail chart).
+const jis = {
+  men:   [["S",80,88],["M",88,96],["L",96,104],["LL (XL)",104,112]],
+  women: [["S",72,80],["M",79,87],["L",86,94],["LL (XL)",93,101]]
+};
+const usMen = [["XS",81,86],["S",86,94],["M",94,102],["L",102,112],["XL",112,122],["XXL",122,132]];
+const usWomen = [["XS",76,84],["S",84,89],["M",89,97],["L",97,104],["XL",104,114]];
+let gender="men";
+function pick(table,cm){
+  for(const [s,lo,hi] of table){ if(cm>=lo && cm<hi) return s; }
+  return null;
+}
+function updateClothing(){
+  const v=parseFloat(document.getElementById("chest").value);
+  const unit=document.getElementById("chestUnit").value;
+  const out=document.getElementById("clothingResult");
+  document.getElementById("chestLabel").textContent = gender==="men" ? "Your chest (around the fullest part)" : "Your bust (around the fullest part)";
+  if(isNaN(v)){out.textContent="Enter your measurement to see your size.";return;}
+  const cm = unit==="in" ? v*IN : v;
+  const jp = pick(jis[gender],cm);
+  const us = pick(gender==="men"?usMen:usWomen,cm);
+  const t = jis[gender];
+  if(!jp){
+    const below = cm < t[0][1];
+    out.innerHTML = `${fmt(cm)} cm (${fmt(cm/IN)} in) is ${below?"below":"above"} the standard Japanese range for ${gender}. Check each brand's size chart directly.`;
+    return;
+  }
+  out.innerHTML = `Japanese size: <strong>${jp}</strong>${us?` &nbsp;·&nbsp; usual US size: <strong>${us}</strong>`:""}<br>
+    <span style="font-size:13px">Your measurement: ${fmt(cm)} cm / ${fmt(cm/IN)} in</span>`;
+}
+document.getElementById("genderSeg").addEventListener("click",e=>{
+  if(!e.target.dataset.g) return; gender=e.target.dataset.g;
+  [...e.currentTarget.children].forEach(b=>b.classList.toggle("on",b===e.target)); updateClothing();
+});
+["chest","chestUnit"].forEach(id=>document.getElementById(id).addEventListener("input",updateClothing));
+
+/* ---------- 3. Shoe size converter ---------- */
+// [JP cm, US, UK, EU]
+const shoes = {
+  men: [[24.5,6.5,5.5,39],[25,7,6,40],[25.5,7.5,6.5,40.5],[26,8,7,41],[26.5,8.5,7.5,42],[27,9,8,42.5],[27.5,9.5,8.5,43],[28,10,9,44],[28.5,10.5,9.5,44.5],[29,11,10,45],[29.5,11.5,10.5,45.5],[30,12,11,46]],
+  women: [[22,5,2.5,35],[22.5,5.5,3,35.5],[23,6,3.5,36],[23.5,6.5,4,37],[24,7,4.5,37.5],[24.5,7.5,5,38],[25,8,5.5,38.5],[25.5,8.5,6,39],[26,9,6.5,40]]
+};
+const idx={jp:0,us:1,uk:2,eu:3};
+let shoeG="men";
+function fillShoeSizes(){
+  const from=document.getElementById("shoeFrom").value, sel=document.getElementById("shoeSize");
+  sel.innerHTML = shoes[shoeG].map((r,i)=>`<option value="${i}">${from==="jp"?r[0]+" cm":r[idx[from]]}</option>`).join("");
+  sel.selectedIndex = Math.floor(shoes[shoeG].length/2);
+  updateShoe();
+}
+function updateShoe(){
+  const r=shoes[shoeG][document.getElementById("shoeSize").value];
+  document.getElementById("shoeResult").innerHTML =
+    `Japan <strong>${r[0]}</strong> cm &nbsp;·&nbsp; US <strong>${r[1]}</strong> &nbsp;·&nbsp; UK <strong>${r[2]}</strong> &nbsp;·&nbsp; EU <strong>${r[3]}</strong>
+     <br><span style="font-size:13px">Foot length about ${r[0]} cm / ${fmt(r[0]/IN)} in</span>`;
+}
+document.getElementById("shoeSeg").addEventListener("click",e=>{
+  if(!e.target.dataset.g) return; shoeG=e.target.dataset.g;
+  [...e.currentTarget.children].forEach(b=>b.classList.toggle("on",b===e.target)); fillShoeSizes();
+});
+document.getElementById("shoeFrom").addEventListener("change",fillShoeSizes);
+document.getElementById("shoeSize").addEventListener("change",updateShoe);
+fillShoeSizes();
+
+/* ---------- 4. cm <-> inch ---------- */
+const cmIn=document.getElementById("cmIn"), inIn=document.getElementById("inIn");
+cmIn.addEventListener("input",()=>{const v=parseFloat(cmIn.value); inIn.value=isNaN(v)?"":fmt(v/IN);});
+inIn.addEventListener("input",()=>{const v=parseFloat(inIn.value); cmIn.value=isNaN(v)?"":fmt(v*IN);});
+</script>
+</body>
+</html>
