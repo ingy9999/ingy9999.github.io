@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Outfit Color Matcher – Upload a Photo, Find Colors That Go With It</title>
 <link rel="canonical" href="https://ingy9999.github.io/outfit-color-matcher.html">
+<link rel="alternate" hreflang="en" href="https://ingy9999.github.io/outfit-color-matcher.html">
+<link rel="alternate" hreflang="ja" href="https://ingy9999.github.io/ja/outfit-color-matcher.html">
+<link rel="alternate" hreflang="x-default" href="https://ingy9999.github.io/outfit-color-matcher.html">
 <meta name="description" content="Upload a photo of a top or pants and get color suggestions for the other half of your outfit: safe neutrals, matching tones and bold contrasts. Free, and your photo never leaves your device.">
 <style>
   :root{
@@ -34,6 +37,7 @@
   th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
   th{font-size:13px;color:var(--muted);font-weight:600}
   td .jp{font-size:18px;font-weight:700}
+  header a{color:var(--accent)}
   td .rom{display:block;font-size:12px;color:var(--muted)}
   td .en{display:block;font-size:14px;line-height:1.4;margin-top:2px}
   .out{min-width:76px}
@@ -71,12 +75,14 @@
 </head>
 <body>
 <header>
+  <div style="font-size:13px;margin-bottom:14px">🌐 <b>English</b> · <a href="ja/outfit-color-matcher.html" hreflang="ja">日本語</a></div>
+  <div id="langSuggest" style="display:none;font-size:14px;background:var(--accent-soft);padding:8px 12px;border-radius:8px;margin-bottom:12px"><a href="ja/outfit-color-matcher.html" hreflang="ja">日本語</a></div>
   <div class="eyebrow">Free outfit tool</div>
   <h1>Outfit Color Matcher</h1>
   <p>Upload a photo of a top or a pair of pants. We read its color and suggest colors for the other half of your outfit.</p>
 </header>
 <nav>
-  <a href="./">Japanese size converter</a>
+  <a href="">Japanese size converter</a>
   <a href="#how">How it works</a>
 </nav>
 <main>
@@ -98,7 +104,7 @@
   <div class="picked"><div class="sw" id="pickedSw"></div><div id="pickedTxt"></div></div>
 </section>
 <section>
-  <h2 id="resTitle">3. Colors for your pants</h2>
+  <h2 id="resTitle"></h2>
   <div id="results"></div>
   <p class="note">These are suggestions based on color theory, not rules. Personal style always wins.</p>
 </section>
@@ -113,6 +119,7 @@
 </main>
 <footer>Color suggestions are for reference only. Colors in photos can look different depending on lighting and your screen.</footer>
 <script>
+const T={"your_top": "Your top", "your_bottom": "Your bottoms", "res_for_pants": "3. Colors for your pants", "res_for_top": "3. Colors for your top", "g_neutral": "Safe neutrals", "g_neutral_sub": "Hard to get wrong", "g_tone": "Tone on tone", "g_tone_sub": "Calm and put-together", "g_contrast": "Contrast", "g_add": "Add a color", "g_contrast_sub": "Stands out", "shop": "Shop {c} {item}:", "item_pants": "pants", "item_top": "tops", "query": "{c} {item}", "lower": true, "colors": {"Black": "Black", "White": "White", "Charcoal": "Charcoal", "Gray": "Gray", "Light gray": "Light gray", "Navy": "Navy", "Beige": "Beige", "Brown": "Brown", "Camel": "Camel", "Olive": "Olive", "Burgundy": "Burgundy", "Pink": "Pink", "Red": "Red", "Orange": "Orange", "Yellow": "Yellow", "Green": "Green", "Teal": "Teal", "Light blue": "Light blue", "Blue": "Blue", "Purple": "Purple", "Magenta": "Magenta", "Denim blue": "Denim blue"}};
 let kind="top";
 const $=id=>document.getElementById(id);
 function rgb2hsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b);let h=0,s=0,l=(mx+mn)/2;
@@ -121,7 +128,7 @@ function rgb2hsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.mi
 function hsl(h,s,l){return `hsl(${Math.round((h%360+360)%360)},${Math.round(s)}%,${Math.round(l)}%)`;}
 function hex2rgb(x){return [1,3,5].map(i=>parseInt(x.substr(i,2),16));}
 function rgb2hex(r,g,b){return "#"+[r,g,b].map(v=>v.toString(16).padStart(2,"0")).join("");}
-function name(h,s,l){
+function key(h,s,l){
  if(l<15) return "Black"; if(l>90&&s<30) return "White";
  if(s<12) return l<40?"Charcoal":l<70?"Gray":"Light gray";
  if(h>=200&&h<250&&l<30) return "Navy";
@@ -138,7 +145,7 @@ function suggest(h,s,l){
  const out={n:[],t:[],c:[]};
  const isNeutral=s<15||l<15||l>90;
  for(const [nm,nh,ns,nl] of neutrals){
-   if(Math.abs(nl-l)<12 && Math.abs(ns-s)<15 && (ns<15||Math.abs(nh-h)<20)) continue; // too close to the item itself
+   if(Math.abs(nl-l)<12 && Math.abs(ns-s)<15 && (ns<15||Math.abs(nh-h)<20)) continue;
    out.n.push([nm,nh,ns,nl]); }
  if(!isNeutral){
    const ts=Math.min(s,55);
@@ -157,19 +164,22 @@ const AMZ=(()=>{
   [/^America\/Mexico_City/,"com.mx"],[/^America\/Sao_Paulo/,"com.br"]];
  for(const [re,d] of byTz) if(re.test(tz)) return "https://www.amazon."+d;
  return "https://www.amazon.com";})();
+const cname=k=>T.colors[k]||k;
 function card([nm,h,s,l]){
- const n=nm||name(((h%360)+360)%360,s,l); const other=kind==="top"?"pants":"top";
- const q=encodeURIComponent(n.toLowerCase()+" "+other);
- return `<div class="card"><div class="c" style="background:${hsl(h,s,l)}"></div><div class="t"><b>${n}</b><span style="font-size:13px;color:var(--muted)">Shop ${n.toLowerCase()} ${other}:</span><br><a href="https://www.google.com/search?tbm=shop&q=${q}" target="_blank" rel="noopener">Google Shopping</a> · <a href="${AMZ}/s?k=${q}" target="_blank" rel="noopener">Amazon</a></div></div>`;}
+ let c=cname(nm||key(((h%360)+360)%360,s,l)); if(T.lower) c=c.toLowerCase();
+ const item=kind==="top"?T.item_pants:T.item_top;
+ const q=encodeURIComponent(T.query.replace("{c}",c).replace("{item}",item));
+ const title=cname(nm||key(((h%360)+360)%360,s,l));
+ return `<div class="card"><div class="c" style="background:${hsl(h,s,l)}"></div><div class="t"><b>${title}</b><span style="font-size:13px;color:var(--muted)">${T.shop.replace("{c}",c).replace("{item}",item)}</span><br><a href="https://www.google.com/search?tbm=shop&q=${q}" target="_blank" rel="noopener">Google Shopping</a> · <a href="${AMZ}/s?k=${q}" target="_blank" rel="noopener">Amazon</a></div></div>`;}
 function render(r,g,b){
  const [h,s,l]=rgb2hsl(r,g,b);
  $("pickedSw").style.background=rgb2hex(r,g,b);
- $("pickedTxt").innerHTML=`Your ${kind==="top"?"top":"bottoms"}: <b>${name(h,s,l)}</b> <span style="color:var(--muted);font-size:13px">${rgb2hex(r,g,b)}</span>`;
+ $("pickedTxt").innerHTML=`${kind==="top"?T.your_top:T.your_bottom}: <b>${cname(key(h,s,l))}</b> <span style="color:var(--muted);font-size:13px">${rgb2hex(r,g,b)}</span>`;
  $("manual").value=rgb2hex(r,g,b);
  const sg=suggest(h,s,l);
  const grp=(t,sub,arr)=>arr.length?`<div class="group">${t}<span>${sub}</span></div><div class="grid">${arr.map(card).join("")}</div>`:"";
- $("resTitle").textContent="3. Colors for your "+(kind==="top"?"pants":"top");
- $("results").innerHTML=grp("Safe neutrals","Hard to get wrong",sg.n)+grp("Tone on tone","Calm and put-together",sg.t)+grp(sg.t.length?"Contrast":"Add a color","Stands out",sg.c);
+ $("resTitle").textContent=kind==="top"?T.res_for_pants:T.res_for_top;
+ $("results").innerHTML=grp(T.g_neutral,T.g_neutral_sub,sg.n)+grp(T.g_tone,T.g_tone_sub,sg.t)+grp(sg.t.length?T.g_contrast:T.g_add,T.g_contrast_sub,sg.c);
 }
 let cur=hex2rgb("#2f3e5c");
 function update(){render(...cur);}
@@ -190,6 +200,8 @@ $("file").addEventListener("change",e=>loadFile(e.target.files[0]));
 const dr=$("drop");["dragover","drop"].forEach(t=>dr.addEventListener(t,e=>{e.preventDefault();if(t==="drop")loadFile(e.dataTransfer.files[0]);}));
 cv.addEventListener("click",e=>{const r=cv.getBoundingClientRect();const x=Math.round((e.clientX-r.left)*cv.width/r.width),y=Math.round((e.clientY-r.top)*cv.height/r.height);
  cur=sample(x,y,6);update();});
+const sug=document.getElementById("langSuggest");
+if(sug){const nl=(navigator.language||"").slice(0,2);const a=sug.querySelector(`a[hreflang="${nl}"]`);if(a&&nl!==document.documentElement.lang)sug.style.display="block",a.style.fontWeight="700";}
 update();
 </script>
 </body>
