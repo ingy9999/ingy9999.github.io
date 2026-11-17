@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combinar colores de ropa: sube una foto y descubre qué colores van bien (gratis)</title>
+<link rel="canonical" href="https://ingy9999.github.io/es/outfit-color-matcher.html">
+<link rel="alternate" hreflang="en" href="https://ingy9999.github.io/outfit-color-matcher.html">
+<link rel="alternate" hreflang="ja" href="https://ingy9999.github.io/ja/outfit-color-matcher.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://ingy9999.github.io/zh/outfit-color-matcher.html">
+<link rel="alternate" hreflang="ko" href="https://ingy9999.github.io/ko/outfit-color-matcher.html">
+<link rel="alternate" hreflang="fr" href="https://ingy9999.github.io/fr/outfit-color-matcher.html">
+<link rel="alternate" hreflang="es" href="https://ingy9999.github.io/es/outfit-color-matcher.html">
+<link rel="alternate" hreflang="it" href="https://ingy9999.github.io/it/outfit-color-matcher.html">
+<link rel="alternate" hreflang="x-default" href="https://ingy9999.github.io/outfit-color-matcher.html">
+<meta name="description" content="Sube la foto de una prenda de arriba o de un pantalón y recibe ideas de colores para la otra mitad de tu look: neutros, tonos similares y contrastes. Gratis, y tu foto no sale de tu dispositivo.">
+<style>
+  :root{
+    --bg:#f6f4ef; --card:#ffffff; --ink:#1d1d1b; --muted:#6b6b66; --line:#e3e0d8;
+    --accent:#b23a2b; --accent-soft:#f3e3df;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+  header{padding:48px 20px 24px;max-width:860px;margin:0 auto}
+  header .eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:8px 0 12px}
+  header p{color:var(--muted);margin:0;max-width:620px}
+  nav{max-width:860px;margin:0 auto;padding:0 20px 8px;display:flex;flex-wrap:wrap;gap:8px}
+  nav a{font-size:14px;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--card);padding:6px 12px;border-radius:999px}
+  nav a:hover{border-color:var(--accent);color:var(--accent)}
+  main{max-width:860px;margin:0 auto;padding:12px 20px 48px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin:16px 0}
+  h2{font-size:22px;margin:0 0 6px}
+  .lead{color:var(--muted);margin:0 0 18px;font-size:15px}
+  label{font-size:14px;font-weight:600;display:block;margin-bottom:4px}
+  input,select{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;width:100%}
+  input:focus,select:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+  .row{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:14px}
+  .result{background:var(--accent-soft);border-radius:10px;padding:14px 16px;font-size:15px}
+  .result strong{font-size:20px}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{font-size:13px;color:var(--muted);font-weight:600}
+  td .jp{font-size:18px;font-weight:700}
+  header a{color:var(--accent)}
+  td .rom{display:block;font-size:12px;color:var(--muted)}
+  td .en{display:block;font-size:14px;line-height:1.4;margin-top:2px}
+  .out{min-width:76px}
+  .out .sub{display:block;font-weight:400;font-size:12px;white-space:normal;line-height:1.35;margin-top:2px}
+  @media (max-width:480px){ section{padding:18px 14px} th,td{padding:10px 4px} }
+  td input{width:88px;min-width:88px;padding:8px 10px;text-align:right}
+  input[type=number]{-moz-appearance:textfield;appearance:textfield}
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .out{font-weight:700;white-space:nowrap}
+  .note{font-size:13px;color:var(--muted);margin-top:12px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:14px}
+  .seg button{font:inherit;font-size:14px;border:0;background:#fff;padding:8px 14px;cursor:pointer}
+  .seg button.on{background:var(--ink);color:#fff}
+  ul.tips{padding-left:20px;margin:0}
+  ul.tips li{margin:6px 0}
+  footer{max-width:860px;margin:0 auto;padding:0 20px 40px;font-size:13px;color:var(--muted)}
+  .scroll{overflow-x:auto}
+
+  .drop{border:2px dashed var(--line);border-radius:12px;padding:24px;text-align:center;cursor:pointer;background:#fbfaf7}
+  .drop:hover{border-color:var(--accent)}
+  #preview{display:none;max-width:100%;border-radius:10px;margin-top:14px;cursor:crosshair;touch-action:manipulation}
+  .picked{display:flex;align-items:center;gap:12px;margin:14px 0}
+  .sw{width:56px;height:56px;border-radius:10px;border:1px solid var(--line);flex:none}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .card .c{height:72px}
+  .card .t{padding:10px 12px;font-size:14px;line-height:1.4}
+  .card .t b{display:block;font-size:15px}
+  .card a{font-size:13px;color:var(--accent)}
+  .group{margin:18px 0 6px;font-size:15px;font-weight:700}
+  .group span{font-weight:400;color:var(--muted);font-size:13px;display:block}
+  details.lang{display:inline-block;position:relative;font-size:14px;margin-bottom:14px}
+  details.lang summary{cursor:pointer;list-style:none;border:1px solid var(--line);background:var(--card);padding:6px 12px;border-radius:999px}
+  details.lang summary::-webkit-details-marker{display:none}
+  details.lang summary::after{content:" ▾";color:var(--muted)}
+  details.lang ul{position:absolute;z-index:10;left:0;top:calc(100% + 6px);margin:0;padding:6px 0;list-style:none;background:var(--card);border:1px solid var(--line);border-radius:10px;min-width:160px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+  details.lang li a,details.lang li b{display:block;padding:8px 14px;color:var(--ink);text-decoration:none}
+  details.lang li a:hover{background:var(--accent-soft)}
+</style>
+
+</head>
+<body>
+<header>
+  <details class="lang"><summary>🌐 Español</summary><ul><li><a href="../outfit-color-matcher.html" hreflang="en" lang="en">English</a></li><li><a href="../ja/outfit-color-matcher.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="../zh/outfit-color-matcher.html" hreflang="zh-Hans" lang="zh-Hans">简体中文</a></li><li><a href="../ko/outfit-color-matcher.html" hreflang="ko" lang="ko">한국어</a></li><li><a href="../fr/outfit-color-matcher.html" hreflang="fr" lang="fr">Français</a></li><li><b>Español</b></li><li><a href="../it/outfit-color-matcher.html" hreflang="it" lang="it">Italiano</a></li></ul></details>
+  <div id="langSuggest" style="display:none;font-size:14px;background:var(--accent-soft);padding:8px 12px;border-radius:8px;margin-bottom:12px"><a href="../outfit-color-matcher.html" hreflang="en">English</a> · <a href="../ja/outfit-color-matcher.html" hreflang="ja">日本語</a> · <a href="../zh/outfit-color-matcher.html" hreflang="zh-Hans">简体中文</a> · <a href="../ko/outfit-color-matcher.html" hreflang="ko">한국어</a> · <a href="../fr/outfit-color-matcher.html" hreflang="fr">Français</a> · <a href="../it/outfit-color-matcher.html" hreflang="it">Italiano</a></div>
+  <div class="eyebrow">Herramienta de moda gratuita</div>
+  <h1>Combinar colores de ropa</h1>
+  <p>Sube la foto de una prenda de arriba o de un pantalón. Detectamos su color y te sugerimos colores para la otra mitad de tu look.</p>
+</header>
+<nav>
+  <a href="../">Conversor de tallas japonesas (inglés)</a>
+  <a href="#how">Cómo funciona</a>
+</nav>
+<main>
+<section>
+  <h2>1. ¿Qué prenda tienes?</h2>
+  <div class="seg" id="kindSeg">
+    <button type="button" data-k="top" class="on">Prenda de arriba</button>
+    <button type="button" data-k="bottom">Pantalón / falda</button>
+  </div>
+  <h2>2. Sube una foto o elige un color</h2>
+  <p class="lead">Tu foto se procesa solo en tu navegador. No se sube a ningún sitio.</p>
+  <label class="drop" id="drop" for="file">Toca para elegir una foto<br><span style="font-size:13px;color:var(--muted)">o arrástrala aquí</span></label>
+  <input type="file" id="file" accept="image/*" style="display:none">
+  <canvas id="preview"></canvas>
+  <p class="note" id="tapHint" style="display:none">¿El color no es correcto? Toca la prenda en la foto para elegir otro punto.</p>
+  <div class="row" style="margin-top:14px">
+    <div><label for="manual">O elige el color tú mismo</label><input type="color" id="manual" value="#2f3e5c" style="height:46px;padding:4px"></div>
+  </div>
+  <div class="picked"><div class="sw" id="pickedSw"></div><div id="pickedTxt"></div></div>
+</section>
+<section>
+  <h2 id="resTitle"></h2>
+  <div id="results"></div>
+  <p class="note">Son sugerencias basadas en la teoría del color, no reglas. Al final, manda tu estilo.</p>
+</section>
+<section id="how">
+  <h2>Cómo funciona</h2>
+  <ul class="tips">
+    <li><strong>Neutros seguros</strong>: negro, blanco, gris, azul marino, beige y vaquero combinan con casi cualquier color.</li>
+    <li><strong>Tonos similares</strong>: colores cercanos al tuyo en el círculo cromático, más claros u oscuros, dan un look tranquilo y armonioso.</li>
+    <li><strong>Contraste</strong>: el color opuesto en el círculo cromático, suavizado para que sea fácil de llevar, hace que el look destaque.</li>
+  </ul>
+</section>
+</main>
+<footer>Las sugerencias de color son solo orientativas. Los colores de una foto pueden variar según la luz y la pantalla.</footer>
+<script>
+const T={"your_top": "Tu prenda de arriba", "your_bottom": "Tu prenda de abajo", "res_for_pants": "3. Colores para tu pantalón", "res_for_top": "3. Colores para tu prenda de arriba", "g_neutral": "Neutros seguros", "g_neutral_sub": "Difícil equivocarse", "g_tone": "Tonos similares", "g_tone_sub": "Tranquilo y armonioso", "g_contrast": "Contraste", "g_add": "Un toque de color", "g_contrast_sub": "Llama la atención", "shop": "Buscar {item} color {c}:", "item_pants": "pantalón", "item_top": "camiseta", "query": "{item} color {c}", "lower": true, "colors": {"Black": "Negro", "White": "Blanco", "Charcoal": "Gris marengo", "Gray": "Gris", "Light gray": "Gris claro", "Navy": "Azul marino", "Beige": "Beige", "Brown": "Marrón", "Camel": "Camel", "Olive": "Verde oliva", "Burgundy": "Burdeos", "Pink": "Rosa", "Red": "Rojo", "Orange": "Naranja", "Yellow": "Amarillo", "Green": "Verde", "Teal": "Verde azulado", "Light blue": "Azul claro", "Blue": "Azul", "Purple": "Morado", "Magenta": "Magenta", "Denim blue": "Azul vaquero"}};
+const AQ={"en": {"colors": {"Black": "Black", "White": "White", "Charcoal": "Charcoal", "Gray": "Gray", "Light gray": "Light gray", "Navy": "Navy", "Beige": "Beige", "Brown": "Brown", "Camel": "Camel", "Olive": "Olive", "Burgundy": "Burgundy", "Pink": "Pink", "Red": "Red", "Orange": "Orange", "Yellow": "Yellow", "Green": "Green", "Teal": "Teal", "Light blue": "Light blue", "Blue": "Blue", "Purple": "Purple", "Magenta": "Magenta", "Denim blue": "Denim blue"}, "item_pants": "pants", "item_top": "tops", "query": "{c} {item}", "lower": true}, "ja": {"colors": {"Black": "黒", "White": "白", "Charcoal": "チャコール", "Gray": "グレー", "Light gray": "ライトグレー", "Navy": "ネイビー", "Beige": "ベージュ", "Brown": "ブラウン", "Camel": "キャメル", "Olive": "オリーブ", "Burgundy": "ボルドー", "Pink": "ピンク", "Red": "赤", "Orange": "オレンジ", "Yellow": "イエロー", "Green": "グリーン", "Teal": "ティール", "Light blue": "ライトブルー", "Blue": "ブルー", "Purple": "パープル", "Magenta": "マゼンタ", "Denim blue": "デニムブルー"}, "item_pants": "パンツ", "item_top": "トップス", "query": "{c} {item}", "lower": false}, "fr": {"colors": {"Black": "Noir", "White": "Blanc", "Charcoal": "Anthracite", "Gray": "Gris", "Light gray": "Gris clair", "Navy": "Bleu marine", "Beige": "Beige", "Brown": "Marron", "Camel": "Camel", "Olive": "Olive", "Burgundy": "Bordeaux", "Pink": "Rose", "Red": "Rouge", "Orange": "Orange", "Yellow": "Jaune", "Green": "Vert", "Teal": "Bleu canard", "Light blue": "Bleu clair", "Blue": "Bleu", "Purple": "Violet", "Magenta": "Magenta", "Denim blue": "Bleu jean"}, "item_pants": "pantalon", "item_top": "haut", "query": "{item} {c}", "lower": true}, "es": {"colors": {"Black": "Negro", "White": "Blanco", "Charcoal": "Gris marengo", "Gray": "Gris", "Light gray": "Gris claro", "Navy": "Azul marino", "Beige": "Beige", "Brown": "Marrón", "Camel": "Camel", "Olive": "Verde oliva", "Burgundy": "Burdeos", "Pink": "Rosa", "Red": "Rojo", "Orange": "Naranja", "Yellow": "Amarillo", "Green": "Verde", "Teal": "Verde azulado", "Light blue": "Azul claro", "Blue": "Azul", "Purple": "Morado", "Magenta": "Magenta", "Denim blue": "Azul vaquero"}, "item_pants": "pantalón", "item_top": "camiseta", "query": "{item} color {c}", "lower": true}, "it": {"colors": {"Black": "Nero", "White": "Bianco", "Charcoal": "Antracite", "Gray": "Grigio", "Light gray": "Grigio chiaro", "Navy": "Blu navy", "Beige": "Beige", "Brown": "Marrone", "Camel": "Cammello", "Olive": "Verde oliva", "Burgundy": "Bordeaux", "Pink": "Rosa", "Red": "Rosso", "Orange": "Arancione", "Yellow": "Giallo", "Green": "Verde", "Teal": "Verde petrolio", "Light blue": "Azzurro", "Blue": "Blu", "Purple": "Viola", "Magenta": "Magenta", "Denim blue": "Blu denim"}, "item_pants": "pantaloni", "item_top": "maglia", "query": "{item} colore {c}", "lower": true}};
+let kind="top";
+const $=id=>document.getElementById(id);
+function rgb2hsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b);let h=0,s=0,l=(mx+mn)/2;
+ if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+ h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h*=60;}return [h,s*100,l*100];}
+function hsl(h,s,l){return `hsl(${Math.round((h%360+360)%360)},${Math.round(s)}%,${Math.round(l)}%)`;}
+function hex2rgb(x){return [1,3,5].map(i=>parseInt(x.substr(i,2),16));}
+function rgb2hex(r,g,b){return "#"+[r,g,b].map(v=>v.toString(16).padStart(2,"0")).join("");}
+function key(h,s,l){
+ if(l<15) return "Black"; if(l>90&&s<30) return "White";
+ if(s<12) return l<40?"Charcoal":l<70?"Gray":"Light gray";
+ if(h>=200&&h<250&&l<30) return "Navy";
+ if(h>=20&&h<50&&s<45&&l>55) return "Beige";
+ if(h>=15&&h<45&&l<45) return "Brown";
+ if(h>=15&&h<45&&s<55) return "Camel";
+ if(h>=45&&h<90&&s<45&&l<50) return "Olive";
+ if(h<12||h>=345) return l<35?"Burgundy":l>70?"Pink":"Red";
+ if(h<40) return "Orange"; if(h<65) return "Yellow"; if(h<160) return "Green";
+ if(h<195) return "Teal"; if(h<250) return l>65?"Light blue":"Blue";
+ if(h<290) return "Purple"; return l>65?"Pink":"Magenta";}
+const neutrals=[["Black",0,0,10],["White",0,0,97],["Gray",0,0,55],["Navy",222,45,22],["Beige",35,35,78],["Denim blue",212,35,45]];
+function suggest(h,s,l){
+ const out={n:[],t:[],c:[]};
+ const isNeutral=s<15||l<15||l>90;
+ for(const [nm,nh,ns,nl] of neutrals){
+   if(Math.abs(nl-l)<12 && Math.abs(ns-s)<15 && (ns<15||Math.abs(nh-h)<20)) continue;
+   out.n.push([nm,nh,ns,nl]); }
+ if(!isNeutral){
+   const ts=Math.min(s,55);
+   const tl=l>50?Math.max(l-35,18):Math.min(l+30,82);
+   out.t.push(["",h,ts,tl]); out.t.push(["",h+30,ts*.8,(tl+l)/2]); out.t.push(["",h-30,ts*.8,tl]);
+   out.c.push(["",h+180,Math.min(s,45),l>50?30:65]); out.c.push(["",h+150,Math.min(s,40),50]); out.c.push(["",h+210,Math.min(s,40),50]);
+ } else {
+   for(const ah of [0,30,120,200,280]) out.c.push(["",ah,45,l<50?60:40]);
+ }
+ return out;}
+const AMZ=(()=>{
+ let tz="";try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||"";}catch(e){}
+ const byTz=[[/^Asia\/Tokyo/,"co.jp"],[/^Europe\/London/,"co.uk"],[/^Europe\/(Berlin|Vienna|Zurich)/,"de"],[/^Europe\/Paris/,"fr"],
+  [/^Europe\/Rome/,"it"],[/^Europe\/Madrid/,"es"],[/^Europe\/Amsterdam/,"nl"],[/^Australia\//,"com.au"],[/^Asia\/(Kolkata|Calcutta)/,"in"],
+  [/^Asia\/Singapore/,"sg"],[/^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|Regina|St_Johns)/,"ca"],
+  [/^America\/Mexico_City/,"com.mx"],[/^America\/Sao_Paulo/,"com.br"]];
+ let d="com";for(const [re,dd] of byTz) if(re.test(tz)){d=dd;break;}
+ const ql={"co.jp":"ja","fr":"fr","es":"es","com.mx":"es","it":"it"}[d]||"en";
+ return {url:"https://www.amazon."+d, ql};})();
+const cname=k=>T.colors[k]||k;
+function aq(k,item){const Q=AQ[AMZ.ql]; let c=Q.colors[k]||k; if(Q.lower) c=c.toLowerCase();
+ const it=kind==="top"?Q.item_pants:Q.item_top; return encodeURIComponent(Q.query.replace("{c}",c).replace("{item}",it));}
+function card([nm,h,s,l]){
+ let c=cname(nm||key(((h%360)+360)%360,s,l)); if(T.lower) c=c.toLowerCase();
+ const item=kind==="top"?T.item_pants:T.item_top;
+ const q=encodeURIComponent(T.query.replace("{c}",c).replace("{item}",item));
+ const title=cname(nm||key(((h%360)+360)%360,s,l));
+ return `<div class="card"><div class="c" style="background:${hsl(h,s,l)}"></div><div class="t"><b>${title}</b><span style="font-size:13px;color:var(--muted)">${T.shop.replace("{c}",c).replace("{item}",item)}</span><br><a href="https://www.google.com/search?tbm=shop&q=${q}" target="_blank" rel="noopener">Google Shopping</a> · <a href="${AMZ.url}/s?k=${aq(nm||key(((h%360)+360)%360,s,l),item)}" target="_blank" rel="noopener">Amazon</a></div></div>`;}
+function render(r,g,b){
+ const [h,s,l]=rgb2hsl(r,g,b);
+ $("pickedSw").style.background=rgb2hex(r,g,b);
+ $("pickedTxt").innerHTML=`${kind==="top"?T.your_top:T.your_bottom}: <b>${cname(key(h,s,l))}</b> <span style="color:var(--muted);font-size:13px">${rgb2hex(r,g,b)}</span>`;
+ $("manual").value=rgb2hex(r,g,b);
+ const sg=suggest(h,s,l);
+ const grp=(t,sub,arr)=>arr.length?`<div class="group">${t}<span>${sub}</span></div><div class="grid">${arr.map(card).join("")}</div>`:"";
+ $("resTitle").textContent=kind==="top"?T.res_for_pants:T.res_for_top;
+ $("results").innerHTML=grp(T.g_neutral,T.g_neutral_sub,sg.n)+grp(T.g_tone,T.g_tone_sub,sg.t)+grp(sg.t.length?T.g_contrast:T.g_add,T.g_contrast_sub,sg.c);
+}
+let cur=hex2rgb("#2f3e5c");
+function update(){render(...cur);}
+$("kindSeg").addEventListener("click",e=>{if(!e.target.dataset.k)return;kind=e.target.dataset.k;
+ [...e.currentTarget.children].forEach(b=>b.classList.toggle("on",b===e.target));update();});
+$("manual").addEventListener("input",e=>{cur=hex2rgb(e.target.value);update();});
+const cv=$("preview"),ctx=cv.getContext("2d",{willReadFrequently:true});
+function sample(cx,cy,rad){
+ const d=ctx.getImageData(Math.max(0,cx-rad),Math.max(0,cy-rad),rad*2,rad*2).data;const px=[];
+ for(let i=0;i<d.length;i+=4) px.push([d[i],d[i+1],d[i+2]]);
+ return [0,1,2].map(k=>{const v=px.map(p=>p[k]).sort((a,b)=>a-b);return v[v.length>>1];});}
+function loadFile(f){if(!f||!f.type.startsWith("image/"))return;const img=new Image();
+ img.onload=()=>{const sc=Math.min(1,900/Math.max(img.width,img.height));cv.width=img.width*sc;cv.height=img.height*sc;
+  ctx.drawImage(img,0,0,cv.width,cv.height);cv.style.display="block";$("tapHint").style.display="block";
+  cur=sample(cv.width>>1,cv.height>>1,Math.round(Math.min(cv.width,cv.height)*.12));update();URL.revokeObjectURL(img.src);};
+ img.src=URL.createObjectURL(f);}
+$("file").addEventListener("change",e=>loadFile(e.target.files[0]));
+const dr=$("drop");["dragover","drop"].forEach(t=>dr.addEventListener(t,e=>{e.preventDefault();if(t==="drop")loadFile(e.dataTransfer.files[0]);}));
+cv.addEventListener("click",e=>{const r=cv.getBoundingClientRect();const x=Math.round((e.clientX-r.left)*cv.width/r.width),y=Math.round((e.clientY-r.top)*cv.height/r.height);
+ cur=sample(x,y,6);update();});
+const sug=document.getElementById("langSuggest");
+if(sug){const nl=(navigator.language||"").slice(0,2);const a=[...sug.querySelectorAll("a")].find(x=>x.hreflang.slice(0,2)===nl);if(a&&nl!==document.documentElement.lang.slice(0,2)){sug.innerHTML="";sug.appendChild(a);sug.style.display="block";}}
+update();
+</script>
+</body>
+</html>

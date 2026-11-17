@@ -59,4 +59,11 @@
   .card a{font-size:13px;color:var(--accent)}
   .group{margin:18px 0 6px;font-size:15px;font-weight:700}
   .group span{font-weight:400;color:var(--muted);font-size:13px;display:block}
+  details.lang{display:inline-block;position:relative;font-size:14px;margin-bottom:14px}
+  details.lang summary{cursor:pointer;list-style:none;border:1px solid var(--line);background:var(--card);padding:6px 12px;border-radius:999px}
+  details.lang summary::-webkit-details-marker{display:none}
+  details.lang summary::after{content:" ▾";color:var(--muted)}
+  details.lang ul{position:absolute;z-index:10;left:0;top:calc(100% + 6px);margin:0;padding:6px 0;list-style:none;background:var(--card);border:1px solid var(--line);border-radius:10px;min-width:160px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+  details.lang li a,details.lang li b{display:block;padding:8px 14px;color:var(--ink);text-decoration:none}
+  details.lang li a:hover{background:var(--accent-soft)}
 </style>
