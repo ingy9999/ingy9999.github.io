@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>服装配色工具｜上传照片，找到相配的衣服颜色【免费】</title>
+<title>服装配色工具｜上传照片，一键找到百搭颜色（免费）</title>
 <link rel="canonical" href="https://ingy9999.github.io/zh/outfit-color-matcher.html">
 <link rel="alternate" hreflang="en" href="https://ingy9999.github.io/outfit-color-matcher.html">
 <link rel="alternate" hreflang="ja" href="https://ingy9999.github.io/ja/outfit-color-matcher.html">
@@ -94,12 +94,12 @@
   <p>上传一张上衣或裤子的照片，我们会识别它的颜色，并推荐适合搭配的另一半衣服的颜色。</p>
 </header>
 <nav>
-  <a href="../">日本尺码换算工具（英文）</a>
-  <a href="#how">使用方法与原理</a>
+  <a href="../">日本尺码换算（英文）</a>
+  <a href="#how">配色原理</a>
 </nav>
 <main>
 <section>
-  <h2>1. 你手上的是哪一件？</h2>
+  <h2>1. 你手上有的是哪一件？</h2>
   <div class="seg" id="kindSeg">
     <button type="button" data-k="top" class="on">上衣</button>
     <button type="button" data-k="bottom">裤子 / 裙子</button>
@@ -118,10 +118,10 @@
 <section>
   <h2 id="resTitle"></h2>
   <div id="results"></div>
-  <p class="note">以上是基于色彩理论的建议，并非规则。最终请按照自己的喜好选择。</p>
+  <p class="note">以上建议基于色彩理论，仅供参考，没有标准答案。最终还是看你自己的喜好。</p>
 </section>
 <section id="how">
-  <h2>使用方法与原理</h2>
+  <h2>配色原理</h2>
   <ul class="tips">
     <li><strong>百搭无彩色</strong>：黑、白、灰、藏青、米色和牛仔色几乎可以搭配任何颜色。</li>
     <li><strong>同色系</strong>：选择色相环上相近的颜色，并调整深浅，能营造沉稳协调的感觉。</li>
@@ -131,7 +131,7 @@
 </main>
 <footer>颜色建议仅供参考。照片中的颜色可能因光线和屏幕不同而与实物有差异。</footer>
 <script>
-const T={"your_top": "你的上衣", "your_bottom": "你的下装", "res_for_pants": "3. 适合搭配的裤子颜色", "res_for_top": "3. 适合搭配的上衣颜色", "g_neutral": "百搭无彩色", "g_neutral_sub": "几乎不会出错", "g_tone": "同色系", "g_tone_sub": "沉稳、协调", "g_contrast": "撞色", "g_add": "点缀色", "g_contrast_sub": "醒目、有层次", "shop": "搜索{c}{item}：", "item_pants": "裤子", "item_top": "上衣", "query": "{c}{item}", "lower": false, "colors": {"Black": "黑色", "White": "白色", "Charcoal": "炭灰色", "Gray": "灰色", "Light gray": "浅灰色", "Navy": "藏青色", "Beige": "米色", "Brown": "棕色", "Camel": "驼色", "Olive": "橄榄绿", "Burgundy": "酒红色", "Pink": "粉色", "Red": "红色", "Orange": "橙色", "Yellow": "黄色", "Green": "绿色", "Teal": "青绿色", "Light blue": "浅蓝色", "Blue": "蓝色", "Purple": "紫色", "Magenta": "洋红色", "Denim blue": "牛仔蓝"}};
+const T={"sep": "：", "your_top": "你的上衣", "your_bottom": "你的下装", "res_for_pants": "3. 适合搭配的裤子颜色", "res_for_top": "3. 适合搭配的上衣颜色", "g_neutral": "百搭无彩色", "g_neutral_sub": "几乎不会出错", "g_tone": "同色系", "g_tone_sub": "低调、和谐", "g_contrast": "撞色", "g_add": "点缀色", "g_contrast_sub": "亮眼、有层次", "shop": "搜索{c}{item}：", "item_pants": "裤子", "item_top": "上衣", "query": "{c}{item}", "lower": false, "colors": {"Black": "黑色", "White": "白色", "Charcoal": "炭灰色", "Gray": "灰色", "Light gray": "浅灰色", "Navy": "藏青色", "Beige": "米色", "Brown": "棕色", "Camel": "驼色", "Olive": "橄榄绿", "Burgundy": "酒红色", "Pink": "粉色", "Red": "红色", "Orange": "橙色", "Yellow": "黄色", "Green": "绿色", "Teal": "青绿色", "Light blue": "浅蓝色", "Blue": "蓝色", "Purple": "紫色", "Magenta": "洋红色", "Denim blue": "牛仔蓝"}};
 const AQ={"en": {"colors": {"Black": "Black", "White": "White", "Charcoal": "Charcoal", "Gray": "Gray", "Light gray": "Light gray", "Navy": "Navy", "Beige": "Beige", "Brown": "Brown", "Camel": "Camel", "Olive": "Olive", "Burgundy": "Burgundy", "Pink": "Pink", "Red": "Red", "Orange": "Orange", "Yellow": "Yellow", "Green": "Green", "Teal": "Teal", "Light blue": "Light blue", "Blue": "Blue", "Purple": "Purple", "Magenta": "Magenta", "Denim blue": "Denim blue"}, "item_pants": "pants", "item_top": "tops", "query": "{c} {item}", "lower": true}, "ja": {"colors": {"Black": "黒", "White": "白", "Charcoal": "チャコール", "Gray": "グレー", "Light gray": "ライトグレー", "Navy": "ネイビー", "Beige": "ベージュ", "Brown": "ブラウン", "Camel": "キャメル", "Olive": "オリーブ", "Burgundy": "ボルドー", "Pink": "ピンク", "Red": "赤", "Orange": "オレンジ", "Yellow": "イエロー", "Green": "グリーン", "Teal": "ティール", "Light blue": "ライトブルー", "Blue": "ブルー", "Purple": "パープル", "Magenta": "マゼンタ", "Denim blue": "デニムブルー"}, "item_pants": "パンツ", "item_top": "トップス", "query": "{c} {item}", "lower": false}, "fr": {"colors": {"Black": "Noir", "White": "Blanc", "Charcoal": "Anthracite", "Gray": "Gris", "Light gray": "Gris clair", "Navy": "Bleu marine", "Beige": "Beige", "Brown": "Marron", "Camel": "Camel", "Olive": "Olive", "Burgundy": "Bordeaux", "Pink": "Rose", "Red": "Rouge", "Orange": "Orange", "Yellow": "Jaune", "Green": "Vert", "Teal": "Bleu canard", "Light blue": "Bleu clair", "Blue": "Bleu", "Purple": "Violet", "Magenta": "Magenta", "Denim blue": "Bleu jean"}, "item_pants": "pantalon", "item_top": "haut", "query": "{item} {c}", "lower": true}, "es": {"colors": {"Black": "Negro", "White": "Blanco", "Charcoal": "Gris marengo", "Gray": "Gris", "Light gray": "Gris claro", "Navy": "Azul marino", "Beige": "Beige", "Brown": "Marrón", "Camel": "Camel", "Olive": "Verde oliva", "Burgundy": "Burdeos", "Pink": "Rosa", "Red": "Rojo", "Orange": "Naranja", "Yellow": "Amarillo", "Green": "Verde", "Teal": "Verde azulado", "Light blue": "Azul claro", "Blue": "Azul", "Purple": "Morado", "Magenta": "Magenta", "Denim blue": "Azul vaquero"}, "item_pants": "pantalón", "item_top": "camiseta", "query": "{item} color {c}", "lower": true}, "it": {"colors": {"Black": "Nero", "White": "Bianco", "Charcoal": "Antracite", "Gray": "Grigio", "Light gray": "Grigio chiaro", "Navy": "Blu navy", "Beige": "Beige", "Brown": "Marrone", "Camel": "Cammello", "Olive": "Verde oliva", "Burgundy": "Bordeaux", "Pink": "Rosa", "Red": "Rosso", "Orange": "Arancione", "Yellow": "Giallo", "Green": "Verde", "Teal": "Verde petrolio", "Light blue": "Azzurro", "Blue": "Blu", "Purple": "Viola", "Magenta": "Magenta", "Denim blue": "Blu denim"}, "item_pants": "pantaloni", "item_top": "maglia", "query": "{item} colore {c}", "lower": true}};
 let kind="top";
 const $=id=>document.getElementById(id);
@@ -190,7 +190,7 @@ function card([nm,h,s,l]){
 function render(r,g,b){
  const [h,s,l]=rgb2hsl(r,g,b);
  $("pickedSw").style.background=rgb2hex(r,g,b);
- $("pickedTxt").innerHTML=`${kind==="top"?T.your_top:T.your_bottom}: <b>${cname(key(h,s,l))}</b> <span style="color:var(--muted);font-size:13px">${rgb2hex(r,g,b)}</span>`;
+ $("pickedTxt").innerHTML=`${kind==="top"?T.your_top:T.your_bottom}${T.sep}<b>${cname(key(h,s,l))}</b> <span style="color:var(--muted);font-size:13px">${rgb2hex(r,g,b)}</span>`;
  $("manual").value=rgb2hex(r,g,b);
  const sg=suggest(h,s,l);
  const grp=(t,sub,arr)=>arr.length?`<div class="group">${t}<span>${sub}</span></div><div class="grid">${arr.map(card).join("")}</div>`:"";

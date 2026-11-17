@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Assortir les couleurs de vos vêtements – à partir d'une photo (gratuit)</title>
+<title>Quelle couleur va avec ? Assortissez vos vêtements à partir d'une photo (gratuit)</title>
 <link rel="canonical" href="https://ingy9999.github.io/fr/outfit-color-matcher.html">
 <link rel="alternate" hreflang="en" href="https://ingy9999.github.io/outfit-color-matcher.html">
 <link rel="alternate" hreflang="ja" href="https://ingy9999.github.io/ja/outfit-color-matcher.html">
@@ -90,12 +90,12 @@
   <details class="lang"><summary>🌐 Français</summary><ul><li><a href="../outfit-color-matcher.html" hreflang="en" lang="en">English</a></li><li><a href="../ja/outfit-color-matcher.html" hreflang="ja" lang="ja">日本語</a></li><li><a href="../zh/outfit-color-matcher.html" hreflang="zh-Hans" lang="zh-Hans">简体中文</a></li><li><a href="../ko/outfit-color-matcher.html" hreflang="ko" lang="ko">한국어</a></li><li><b>Français</b></li><li><a href="../es/outfit-color-matcher.html" hreflang="es" lang="es">Español</a></li><li><a href="../it/outfit-color-matcher.html" hreflang="it" lang="it">Italiano</a></li></ul></details>
   <div id="langSuggest" style="display:none;font-size:14px;background:var(--accent-soft);padding:8px 12px;border-radius:8px;margin-bottom:12px"><a href="../outfit-color-matcher.html" hreflang="en">English</a> · <a href="../ja/outfit-color-matcher.html" hreflang="ja">日本語</a> · <a href="../zh/outfit-color-matcher.html" hreflang="zh-Hans">简体中文</a> · <a href="../ko/outfit-color-matcher.html" hreflang="ko">한국어</a> · <a href="../es/outfit-color-matcher.html" hreflang="es">Español</a> · <a href="../it/outfit-color-matcher.html" hreflang="it">Italiano</a></div>
   <div class="eyebrow">Outil de style gratuit</div>
-  <h1>Assortir les couleurs de vos vêtements</h1>
-  <p>Ajoutez la photo d'un haut ou d'un pantalon. Nous détectons sa couleur et vous proposons des couleurs pour l'autre moitié de votre tenue.</p>
+  <h1>Quelle couleur va avec ?</h1>
+  <p>Ajoutez la photo d'un haut ou d'un pantalon : nous détectons sa couleur et vous proposons des couleurs assorties pour compléter votre tenue.</p>
 </header>
 <nav>
   <a href="../">Convertisseur de tailles japonaises (anglais)</a>
-  <a href="#how">Fonctionnement</a>
+  <a href="#how">Comment ça marche</a>
 </nav>
 <main>
 <section>
@@ -106,10 +106,10 @@
   </div>
   <h2>2. Ajoutez une photo ou choisissez une couleur</h2>
   <p class="lead">Votre photo est traitée uniquement dans votre navigateur. Elle n'est envoyée nulle part.</p>
-  <label class="drop" id="drop" for="file">Touchez pour choisir une photo<br><span style="font-size:13px;color:var(--muted)">ou glissez-la ici</span></label>
+  <label class="drop" id="drop" for="file">Appuyez pour choisir une photo<br><span style="font-size:13px;color:var(--muted)">ou faites-la glisser ici</span></label>
   <input type="file" id="file" accept="image/*" style="display:none">
   <canvas id="preview"></canvas>
-  <p class="note" id="tapHint" style="display:none">La couleur n'est pas la bonne ? Touchez le vêtement sur la photo pour choisir un autre endroit.</p>
+  <p class="note" id="tapHint" style="display:none">La couleur ne correspond pas ? Appuyez sur le vêtement dans la photo pour choisir un autre endroit.</p>
   <div class="row" style="margin-top:14px">
     <div><label for="manual">Ou choisissez la couleur vous-même</label><input type="color" id="manual" value="#2f3e5c" style="height:46px;padding:4px"></div>
   </div>
@@ -121,9 +121,9 @@
   <p class="note">Ce sont des suggestions fondées sur la théorie des couleurs, pas des règles. Votre style a toujours le dernier mot.</p>
 </section>
 <section id="how">
-  <h2>Fonctionnement</h2>
+  <h2>Comment ça marche</h2>
   <ul class="tips">
-    <li><strong>Les neutres</strong> : noir, blanc, gris, bleu marine, beige et denim vont avec presque toutes les couleurs.</li>
+    <li><strong>Les valeurs sûres</strong> : noir, blanc, gris, bleu marine, beige et denim vont avec presque toutes les couleurs.</li>
     <li><strong>Ton sur ton</strong> : des couleurs proches de la vôtre sur le cercle chromatique, plus claires ou plus foncées, donnent une allure harmonieuse.</li>
     <li><strong>Contraste</strong> : la couleur opposée sur le cercle chromatique, adoucie pour être facile à porter, fait ressortir la tenue.</li>
   </ul>
@@ -131,7 +131,7 @@
 </main>
 <footer>Les suggestions de couleurs sont données à titre indicatif. Les couleurs d'une photo peuvent varier selon l'éclairage et l'écran.</footer>
 <script>
-const T={"your_top": "Votre haut", "your_bottom": "Votre bas", "res_for_pants": "3. Couleurs pour votre pantalon", "res_for_top": "3. Couleurs pour votre haut", "g_neutral": "Les neutres", "g_neutral_sub": "Difficile de se tromper", "g_tone": "Ton sur ton", "g_tone_sub": "Harmonieux et sobre", "g_contrast": "Contraste", "g_add": "Une touche de couleur", "g_contrast_sub": "Qui se remarque", "shop": "Chercher un {item} {c} :", "item_pants": "pantalon", "item_top": "haut", "query": "{item} {c}", "lower": true, "colors": {"Black": "Noir", "White": "Blanc", "Charcoal": "Anthracite", "Gray": "Gris", "Light gray": "Gris clair", "Navy": "Bleu marine", "Beige": "Beige", "Brown": "Marron", "Camel": "Camel", "Olive": "Olive", "Burgundy": "Bordeaux", "Pink": "Rose", "Red": "Rouge", "Orange": "Orange", "Yellow": "Jaune", "Green": "Vert", "Teal": "Bleu canard", "Light blue": "Bleu clair", "Blue": "Bleu", "Purple": "Violet", "Magenta": "Magenta", "Denim blue": "Bleu jean"}};
+const T={"sep": " : ", "your_top": "Votre haut", "your_bottom": "Votre bas", "res_for_pants": "3. Couleurs pour votre pantalon", "res_for_top": "3. Couleurs pour votre haut", "g_neutral": "Les valeurs sûres", "g_neutral_sub": "Impossible de se tromper", "g_tone": "Ton sur ton", "g_tone_sub": "Harmonieux et élégant", "g_contrast": "Contraste", "g_add": "Une touche de couleur", "g_contrast_sub": "Pour se démarquer", "shop": "Chercher un {item} {c} :", "item_pants": "pantalon", "item_top": "haut", "query": "{item} {c}", "lower": true, "colors": {"Black": "Noir", "White": "Blanc", "Charcoal": "Anthracite", "Gray": "Gris", "Light gray": "Gris clair", "Navy": "Bleu marine", "Beige": "Beige", "Brown": "Marron", "Camel": "Camel", "Olive": "Olive", "Burgundy": "Bordeaux", "Pink": "Rose", "Red": "Rouge", "Orange": "Orange", "Yellow": "Jaune", "Green": "Vert", "Teal": "Bleu canard", "Light blue": "Bleu clair", "Blue": "Bleu", "Purple": "Violet", "Magenta": "Magenta", "Denim blue": "Bleu jean"}};
 const AQ={"en": {"colors": {"Black": "Black", "White": "White", "Charcoal": "Charcoal", "Gray": "Gray", "Light gray": "Light gray", "Navy": "Navy", "Beige": "Beige", "Brown": "Brown", "Camel": "Camel", "Olive": "Olive", "Burgundy": "Burgundy", "Pink": "Pink", "Red": "Red", "Orange": "Orange", "Yellow": "Yellow", "Green": "Green", "Teal": "Teal", "Light blue": "Light blue", "Blue": "Blue", "Purple": "Purple", "Magenta": "Magenta", "Denim blue": "Denim blue"}, "item_pants": "pants", "item_top": "tops", "query": "{c} {item}", "lower": true}, "ja": {"colors": {"Black": "黒", "White": "白", "Charcoal": "チャコール", "Gray": "グレー", "Light gray": "ライトグレー", "Navy": "ネイビー", "Beige": "ベージュ", "Brown": "ブラウン", "Camel": "キャメル", "Olive": "オリーブ", "Burgundy": "ボルドー", "Pink": "ピンク", "Red": "赤", "Orange": "オレンジ", "Yellow": "イエロー", "Green": "グリーン", "Teal": "ティール", "Light blue": "ライトブルー", "Blue": "ブルー", "Purple": "パープル", "Magenta": "マゼンタ", "Denim blue": "デニムブルー"}, "item_pants": "パンツ", "item_top": "トップス", "query": "{c} {item}", "lower": false}, "fr": {"colors": {"Black": "Noir", "White": "Blanc", "Charcoal": "Anthracite", "Gray": "Gris", "Light gray": "Gris clair", "Navy": "Bleu marine", "Beige": "Beige", "Brown": "Marron", "Camel": "Camel", "Olive": "Olive", "Burgundy": "Bordeaux", "Pink": "Rose", "Red": "Rouge", "Orange": "Orange", "Yellow": "Jaune", "Green": "Vert", "Teal": "Bleu canard", "Light blue": "Bleu clair", "Blue": "Bleu", "Purple": "Violet", "Magenta": "Magenta", "Denim blue": "Bleu jean"}, "item_pants": "pantalon", "item_top": "haut", "query": "{item} {c}", "lower": true}, "es": {"colors": {"Black": "Negro", "White": "Blanco", "Charcoal": "Gris marengo", "Gray": "Gris", "Light gray": "Gris claro", "Navy": "Azul marino", "Beige": "Beige", "Brown": "Marrón", "Camel": "Camel", "Olive": "Verde oliva", "Burgundy": "Burdeos", "Pink": "Rosa", "Red": "Rojo", "Orange": "Naranja", "Yellow": "Amarillo", "Green": "Verde", "Teal": "Verde azulado", "Light blue": "Azul claro", "Blue": "Azul", "Purple": "Morado", "Magenta": "Magenta", "Denim blue": "Azul vaquero"}, "item_pants": "pantalón", "item_top": "camiseta", "query": "{item} color {c}", "lower": true}, "it": {"colors": {"Black": "Nero", "White": "Bianco", "Charcoal": "Antracite", "Gray": "Grigio", "Light gray": "Grigio chiaro", "Navy": "Blu navy", "Beige": "Beige", "Brown": "Marrone", "Camel": "Cammello", "Olive": "Verde oliva", "Burgundy": "Bordeaux", "Pink": "Rosa", "Red": "Rosso", "Orange": "Arancione", "Yellow": "Giallo", "Green": "Verde", "Teal": "Verde petrolio", "Light blue": "Azzurro", "Blue": "Blu", "Purple": "Viola", "Magenta": "Magenta", "Denim blue": "Blu denim"}, "item_pants": "pantaloni", "item_top": "maglia", "query": "{item} colore {c}", "lower": true}};
 let kind="top";
 const $=id=>document.getElementById(id);
@@ -190,7 +190,7 @@ function card([nm,h,s,l]){
 function render(r,g,b){
  const [h,s,l]=rgb2hsl(r,g,b);
  $("pickedSw").style.background=rgb2hex(r,g,b);
- $("pickedTxt").innerHTML=`${kind==="top"?T.your_top:T.your_bottom}: <b>${cname(key(h,s,l))}</b> <span style="color:var(--muted);font-size:13px">${rgb2hex(r,g,b)}</span>`;
+ $("pickedTxt").innerHTML=`${kind==="top"?T.your_top:T.your_bottom}${T.sep}<b>${cname(key(h,s,l))}</b> <span style="color:var(--muted);font-size:13px">${rgb2hex(r,g,b)}</span>`;
  $("manual").value=rgb2hex(r,g,b);
  const sg=suggest(h,s,l);
  const grp=(t,sub,arr)=>arr.length?`<div class="group">${t}<span>${sub}</span></div><div class="grid">${arr.map(card).join("")}</div>`:"";
