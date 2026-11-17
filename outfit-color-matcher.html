@@ -149,10 +149,18 @@ function suggest(h,s,l){
    for(const ah of [0,30,120,200,280]) out.c.push(["",ah,45,l<50?60:40]);
  }
  return out;}
+const AMZ=(()=>{
+ let tz="";try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||"";}catch(e){}
+ const byTz=[[/^Asia\/Tokyo/,"co.jp"],[/^Europe\/London/,"co.uk"],[/^Europe\/(Berlin|Vienna|Zurich)/,"de"],[/^Europe\/Paris/,"fr"],
+  [/^Europe\/Rome/,"it"],[/^Europe\/Madrid/,"es"],[/^Europe\/Amsterdam/,"nl"],[/^Australia\//,"com.au"],[/^Asia\/(Kolkata|Calcutta)/,"in"],
+  [/^Asia\/Singapore/,"sg"],[/^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|Regina|St_Johns)/,"ca"],
+  [/^America\/Mexico_City/,"com.mx"],[/^America\/Sao_Paulo/,"com.br"]];
+ for(const [re,d] of byTz) if(re.test(tz)) return "https://www.amazon."+d;
+ return "https://www.amazon.com";})();
 function card([nm,h,s,l]){
  const n=nm||name(((h%360)+360)%360,s,l); const other=kind==="top"?"pants":"top";
  const q=encodeURIComponent(n.toLowerCase()+" "+other);
- return `<div class="card"><div class="c" style="background:${hsl(h,s,l)}"></div><div class="t"><b>${n}</b><span style="font-size:13px;color:var(--muted)">Shop ${n.toLowerCase()} ${other}:</span><br><a href="https://www.google.com/search?tbm=shop&q=${q}" target="_blank" rel="noopener">Google Shopping</a> · <a href="https://www.amazon.com/s?k=${q}" target="_blank" rel="noopener">Amazon</a></div></div>`;}
+ return `<div class="card"><div class="c" style="background:${hsl(h,s,l)}"></div><div class="t"><b>${n}</b><span style="font-size:13px;color:var(--muted)">Shop ${n.toLowerCase()} ${other}:</span><br><a href="https://www.google.com/search?tbm=shop&q=${q}" target="_blank" rel="noopener">Google Shopping</a> · <a href="${AMZ}/s?k=${q}" target="_blank" rel="noopener">Amazon</a></div></div>`;}
 function render(r,g,b){
  const [h,s,l]=rgb2hsl(r,g,b);
  $("pickedSw").style.background=rgb2hex(r,g,b);
