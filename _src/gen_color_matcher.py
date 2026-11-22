@@ -14,7 +14,7 @@ L = {
    desc="Upload a photo of a top or pants and get color suggestions for the other half of your outfit: safe neutrals, matching tones and bold contrasts. Free, and your photo never leaves your device.",
    eyebrow="Free outfit tool", h1="Outfit Color Matcher",
    intro="Upload a photo of a top or a pair of pants. We read its color and suggest colors for the other half of your outfit.",
-   nav_size="Japanese size converter", nav_how="How it works",
+   nav_size="Japanese size converter", nav_how="How it works", nav_trends="Japanese fashion trends this week",
    step1="1. What do you have?", top_btn="A top", bottom_btn="Pants / skirt",
    step2="2. Add a photo or pick a color", privacy="Your photo is processed in your browser only. It is never uploaded anywhere.",
    drop1="Tap to choose a photo", drop2="or drag and drop it here",
@@ -38,7 +38,7 @@ L = {
    desc="トップスやパンツの写真をアップロードすると、その色に合うもう片方の服の色を提案します。定番の無彩色・同系色・反対色の3パターン。写真は端末の外に送信されません。",
    eyebrow="無料のコーディネートツール", h1="服の色合わせツール",
    intro="トップスかパンツの写真を入れると、服の色を読み取って、もう片方に合う色を提案します。",
-   nav_size="サイズ換算ツール（英語）", nav_how="使い方と仕組み",
+   nav_size="サイズ換算ツール（英語）", nav_how="使い方と仕組み", nav_trends="今週のファッショントレンド",
    step1="1. 手持ちの服はどちら？", top_btn="トップス", bottom_btn="パンツ・スカート",
    step2="2. 写真を入れるか、色を選ぶ", privacy="写真はお使いのブラウザの中だけで処理され、どこにも送信されません。",
    drop1="タップして写真を選ぶ", drop2="またはここにドラッグ＆ドロップ",
@@ -303,6 +303,7 @@ def build(code):
     sugg = " · ".join(f'<a href="{up}{L[c]["path"]}" hreflang="{L[c]["hl"]}">{L[c]["lang_name"]}</a>' for c in L if c != code)
     js_t = {k: t[k] for k in ["sep","your_top","your_bottom","res_for_pants","res_for_top","g_neutral","g_neutral_sub","g_tone","g_tone_sub",
                               "g_contrast","g_add","g_contrast_sub","shop","item_pants","item_top","query","lower","colors"]}
+    trends_link = f'\n  <a href="japanese-fashion-trends.html">{t["nav_trends"]}</a>' if t.get("nav_trends") else ""
     how = "\n".join(f"    <li>{x}</li>" for x in t["how"])
     html = f'''<!DOCTYPE html>
 <html lang="{t["hl"]}">
@@ -325,7 +326,7 @@ def build(code):
 </header>
 <nav>
   <a href="{up}">{t["nav_size"]}</a>
-  <a href="#how">{t["nav_how"]}</a>
+  <a href="#how">{t["nav_how"]}</a>{trends_link}
 </nav>
 <main>
 <section>
