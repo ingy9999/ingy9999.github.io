@@ -198,6 +198,12 @@ function render(r,g,b){
  $("results").innerHTML=grp(T.g_neutral,T.g_neutral_sub,sg.n)+grp(T.g_tone,T.g_tone_sub,sg.t)+grp(sg.t.length?T.g_contrast:T.g_add,T.g_contrast_sub,sg.c);
 }
 let cur=hex2rgb("#2f3e5c");
+// Optional link parameters: ?color=800020 (hex, with or without #) and &kind=top|bottom
+const QP=new URLSearchParams(location.search);
+const qc=(QP.get("color")||"").replace(/^#/,"");
+if(/^[0-9a-fA-F]{6}$/.test(qc)) cur=hex2rgb("#"+qc.toLowerCase());
+if(QP.get("kind")==="bottom"){kind="bottom";[...$("kindSeg").children].forEach(b=>b.classList.toggle("on",b.dataset.k==="bottom"));}
+if(location.search) document.querySelectorAll('a[hreflang]').forEach(a=>{if(!a.search)a.search=location.search;});
 function update(){render(...cur);}
 $("kindSeg").addEventListener("click",e=>{if(!e.target.dataset.k)return;kind=e.target.dataset.k;
  [...e.currentTarget.children].forEach(b=>b.classList.toggle("on",b===e.target));update();});
@@ -219,6 +225,7 @@ cv.addEventListener("click",e=>{const r=cv.getBoundingClientRect();const x=Math.
 const sug=document.getElementById("langSuggest");
 if(sug){const nl=(navigator.language||"").slice(0,2);const a=[...sug.querySelectorAll("a")].find(x=>x.hreflang.slice(0,2)===nl);if(a&&nl!==document.documentElement.lang.slice(0,2)){sug.innerHTML="";sug.appendChild(a);sug.style.display="block";}}
 update();
+if(/^[0-9a-fA-F]{6}$/.test(qc)) $("pickedSw").parentElement.scrollIntoView({block:"start"});
 </script>
 </body>
 </html>

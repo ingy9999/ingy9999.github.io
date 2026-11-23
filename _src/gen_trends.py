@@ -62,7 +62,11 @@ def build(code, d, weeks, is_current):
         link_target["shoes"] = (up or "./") + "#shoes"
     items = []
     for i, it in enumerate(data["items"], 1):
-        cta = " · ".join(f'<a href="{link_target[k]}">{esc(txt)} →</a>' for k, txt in it["links"] if link_target.get(k))
+        def href(l):
+            u = link_target[l[0]]
+            # optional 3rd element: a hex color passed to the color matcher so it opens with that color selected
+            return u + "?color=" + l[2].lstrip("#") if l[0] == "color" and len(l) > 2 else u
+        cta = " · ".join(f'<a href="{href(l)}">{esc(l[1])} →</a>' for l in it["links"] if link_target.get(l[0]))
         src = ", ".join(f'<a href="{html.escape(u)}" target="_blank" rel="noopener">{esc(n)}</a>' for n, u in it["src"])
         items.append(f'''<section id="t{i}">
   <h2>{i}. {esc(it["h"])}</h2>
